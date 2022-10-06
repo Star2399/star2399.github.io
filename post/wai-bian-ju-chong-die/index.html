@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>外边距重叠 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+块级元素的上外边距（margin-top）与下外边距（margin-bottom）有时会合并为单个外边距，这样的现象称为“外边距合并”。
+
+
+产生折叠的必备条件：margin必须是邻接的!
+
+而根据w3c规范，两个margin是邻接的必须..." />
+    <meta name="keywords" content="css" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">外边距重叠</h2>
+            <div class="post-date">2022-09-21</div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p>块级元素的上外边距（margin-top）与下外边距（margin-bottom）有时会合并为单个外边距，这样的现象称为“外边距合并”。</p>
+</blockquote>
+<ul>
+<li>产生折叠的必备条件：margin必须是邻接的!</li>
+</ul>
+<h2 id="而根据w3c规范两个margin是邻接的必须满足以下条件">而根据w3c规范，两个margin是邻接的必须满足以下条件：</h2>
+<pre><code>- 必须是处于常规文档流（非float和绝对定位）的块级盒子，并且处于同一个BFC当中。
+- 没有线盒，没有空隙，没有padding和border将他们分隔开
+- 都属于垂直方向上相邻的外边距，可以是下面任意一种情况
+- 元素的margin-top与其第一个常规文档流的子元素的margin-top
+- 元素的margin-bottom与其下一个常规文档流的兄弟元素的margin-top
+- height为auto的元素的margin-bottom与其最后一个常规文档流的子元素的margin-bottom
+- 高度为0并且最小高度也为0，不包含常规文档流的子元素，并且自身没有建立新的BFC的元素的margin-top和margin-bottom
+</code></pre>
+<h2 id="margin合并的3种场景">margin合并的3种场景：</h2>
+<p>###（1）相邻兄弟元素margin合并。</p>
+<p>解决办法：</p>
+<ul>
+<li>设置块状格式化上下文元素（BFC）</li>
+</ul>
+<p>###（2）父级和第一个/最后一个子元素的margin合并。</p>
+<p>解决办法：</p>
+<p>对于margin-top合并，可以进行如下操作（满足一个条件即可）：</p>
+<ul>
+<li>父元素设置为块状格式化上下文元素；</li>
+<li>父元素设置border-top值；</li>
+<li>父元素设置padding-top值；</li>
+<li>父元素和第一个子元素之间添加内联元素进行分隔。</li>
+</ul>
+<p>对于margin-bottom合并，可以进行如下操作（满足一个条件即可）：</p>
+<ul>
+<li>父元素设置为块状格式化上下文元素；</li>
+<li>父元素设置border-bottom值；</li>
+<li>父元素设置padding-bottom值；</li>
+<li>父元素和最后一个子元素之间添加内联元素进行分隔；</li>
+<li>父元素设置height、min-height或max-height。</li>
+</ul>
+<p>###（3）空块级元素的margin合并。</p>
+<p>解决办法：</p>
+<ul>
+<li>设置垂直方向的border；</li>
+<li>设置垂直方向的padding；</li>
+<li>里面添加内联元素（直接Space键空格是没用的）；</li>
+<li>设置height或者min-height。</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/HLPE3tREH/" class="tag">
+                    css
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/shi-yong-tu-pian-base64-bian-ma-de-you-dian-he-que-dian/">
+                  <h3 class="post-title">
+                    使用图片 base64 编码的优点和缺点
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

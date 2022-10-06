@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>DOMContentLoaded和onload | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="1.JS代码与body标签的位置关系
+如果js代码写在body标签前面，而且没用其他事件而直接获取dom的话是无法获取的。而js代码写在body标签的后面（里面的最后也可以）就可以获取dom。
+实际上如果了解浏览器解析HTML规则就很清楚原..." />
+    <meta name="keywords" content="javascript" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">DOMContentLoaded和onload</h2>
+            <div class="post-date">2022-09-29</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="1js代码与body标签的位置关系">1.JS代码与body标签的位置关系</h1>
+<p>如果js代码写在body标签前面，而且没用其他事件而直接获取dom的话是无法获取的。而js代码写在body标签的后面（里面的最后也可以）就可以获取dom。</p>
+<p>实际上如果了解浏览器解析HTML规则就很清楚原因了，浏览器解析HTML由上往下依次执行，如果遇到<code>&lt;script&gt;</code>会阻塞解析，先执行该JS脚本（如果是外部JS文件还要先加载），执行结束后再接着往下解析，所以上面获取不到dom的原因是当时JS代码执行时页面DOM树尚未构建完成。具体分析往下看。</p>
+<h1 id="2script标签的defer和async">2.script标签的defer和async</h1>
+<p>从上面知道，浏览器解析HTML遇到script标签会阻塞。上面举例的JS代码都是内嵌在HTML中的，这样再解析到script时直接执行就行。但如果是引入外部JS文件的话会有一点不同，要先加载该JS文件，然后执行，然后在往下解析HTML。但script标签上还有两个常见属性defer和async</p>
+<h2 id="21-一般情况script-srcxxxjs">2.1 一般情况<script src="xxx.js"></h2>
+<p>当浏览器遇到 script 标签时，文档的解析将停止，并立即下载并执行脚本，脚本执行完毕后将继续解析文档</p>
+<h2 id="22-defer-script-defer-srcxxxjs">2.2 defer <script defer src="xxx.js"></h2>
+<p>浏览器遇到 script 标签时，文档的解析不会停止，JS文件的加载与文档解析并行（异步），待到文档解析DOM构建完成，脚本才会执行（在DOMContentLoaded事件触发之前）。</p>
+<h2 id="23-async-script-async-srcxxxjs">2.3 async <script async src="xxx.js"></h2>
+<p>当浏览器遇到 script 标签时，文档的解析不会停止，JS文件的加载与文档解析并行（异步），脚本下载完成后开始执行脚本，脚本执行时文档会停止解析。<br>
+<img src="https://star2399.github.io/post-images/1664447685461.jpg" alt="" loading="lazy"></p>
+<h2 id="24-总结defer和async的区别">2.4 总结defer和async的区别：</h2>
+<ul>
+<li>加载时是一样的，相对于HTML解析是异步的。</li>
+<li>不同的是执行时机，async在代码加载完之后会马上执行，并且执行时会阻塞HTML解析。而defer则要等到文档解析DOM构建完成，DOMContentLoaded事件触发之前执行。</li>
+<li>async执行时机不确定性，要注意使用场景。</li>
+</ul>
+<h1 id="3domcontentloaded和windowonload">3.DOMContentLoaded和window.onload</h1>
+<h2 id="31-domcontentloaded">3.1 DomContentLoaded</h2>
+<ul>
+<li>MDN解释：当初始的 HTML 文档被完全加载和解析完成之后，DOMContentLoaded 事件被触发，而无需等待样式表、图像和子框架的完成加载。</li>
+<li>在DOMContentLoaded后面引入样式表，DOMContentLoaded可能无法获取样式表里的样式，因为此时HTML解析完成，DOM树构建完成，但外部css文件可能还没加载完成。</li>
+</ul>
+<h2 id="32-windowonload">3.2 window.onload</h2>
+<p>此时HTML文档解析完成，其他依赖资源（css）也全部加载完成。</p>
+<h1 id="4总结">4.总结</h1>
+<h2 id="html文档加载步骤">HTML文档加载步骤：</h2>
+<ol>
+<li>由上往下解析HTML结构。</li>
+<li>遇到src属性则发起请求加载资源，只有script会阻塞HTML解析，其他（css、img等）都不会影响HTML解析。</li>
+<li>script资源加载完，执行JS脚本。</li>
+<li>DOM树构建完成，触发DOMContentLoaded</li>
+<li>其他css、img、iframe等资源如果还未加载完成继续加载。</li>
+<li>页面加载完毕，触发window.onload</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/QJnvI1d6K/" class="tag">
+                    javascript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/js-shi-jian-mo-xing/">
+                  <h3 class="post-title">
+                    JS事件模型
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Object.is()、==、===的区别 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="Object.is()
+语法：
+Object.is(value1, value2);
+参数：
+value1
+被比较的第一个值。
+value2
+被比较的第二个值。
+返回值
+一个布尔值，表示两个参数是否是同一个值。
+描述
+Object.is()..." />
+    <meta name="keywords" content="javascript" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Object.is()、==、===的区别</h2>
+            <div class="post-date">2022-09-21</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="objectis">Object.is()</h1>
+<h2 id="语法">语法：</h2>
+<p><code>Object.is(value1, value2);</code></p>
+<h2 id="参数">参数：</h2>
+<p>value1<br>
+被比较的第一个值。</p>
+<p>value2<br>
+被比较的第二个值。</p>
+<h2 id="返回值">返回值</h2>
+<p>一个布尔值，表示两个参数是否是同一个值。</p>
+<h2 id="描述">描述</h2>
+<p><code>Object.is()</code>方法判断两个值是否为同一个值，如果满足以下任意条件则两个值相等：</p>
+<ul>
+<li>都是 undefined</li>
+<li>都是 null</li>
+<li>都是 true 或都是 false</li>
+<li>都是相同长度、相同字符、按相同顺序排列的字符串</li>
+<li>都是相同对象（意味着都是同一个对象的值引用）</li>
+<li>都是数字且
+<ul>
+<li>都是 +0</li>
+<li>都是 -0</li>
+<li>都是 NaN</li>
+<li>都是同一个值，非零且都不是 NaN</li>
+</ul>
+</li>
+</ul>
+<p><code>Object.is()</code> 与 == 不同。== 运算符在判断相等前对两边的变量（如果它们不是同一类型）进行强制转换（这种行为将 &quot;&quot; == false 判断为 true），而 Object.is 不会强制转换两边的值<br>
+<code>Object.is()</code> 与 === 也不相同。差别是它们对待有符号的零和 NaN 不同，例如，=== 运算符（也包括 == 运算符）将数字 -0 和 +0 视为相等，而将 Number.NaN 与 NaN 视为不相等。</p>
+<h2 id="例子">例子：</h2>
+<pre><code>// Case 2: Signed zero
+Object.is(0, -0);                 // false
+Object.is(+0, -0);                // false
+Object.is(-0, -0);                // true
+Object.is(0n, -0n);               // true
+
+// Case 3: NaN
+Object.is(NaN, 0/0);              // true
+Object.is(NaN, Number.NaN)        // true
+</code></pre>
+<h1 id="">==</h1>
+<p>等于运算符（ == ）检查其两个操作数是否相等，并返回Boolean结果。与严格相等运算符（===）不同，它会尝试强制类型转换并且比较不同类型的操作数。</p>
+<h2 id="语法-2">语法：</h2>
+<p><code>x == y</code></p>
+<h2 id="描述-2">描述：</h2>
+<p>相等运算符（==和!=）使用抽象相等比较算法比较两个操作数。可以大致概括如下：</p>
+<ul>
+<li>如果两个操作数都是对象，则仅当两个操作数都引用同一个对象时才返回true。</li>
+<li>如果一个操作数是null，另一个操作数是undefined，则返回true。</li>
+<li>如果两个操作数是不同类型的，就会尝试在比较之前将它们转换为相同类型：
+<ul>
+<li>当数字与字符串进行比较时，会尝试将字符串转换为数字值。</li>
+<li>如果操作数之一是Boolean，则将布尔操作数转换为 1 或 0。
+<ul>
+<li>如果是true，则转换为1。</li>
+<li>如果是 false，则转换为0。</li>
+</ul>
+</li>
+<li>如果操作数之一是对象，另一个是数字或字符串，会尝试使用对象的valueOf()和toString()方法将对象转换为原始值。</li>
+</ul>
+</li>
+<li>如果操作数具有相同的类型，则将它们进行如下比较：
+<ul>
+<li>String：true仅当两个操作数具有相同顺序的相同字符时才返回。</li>
+<li>Number：true仅当两个操作数具有相同的值时才返回。+0并被-0视为相同的值。如果任一操作数为NaN，则返回false。</li>
+<li>Boolean：true仅当操作数为两个true或两个false时才返回true。</li>
+</ul>
+</li>
+</ul>
+<p>此运算符与严格等于（===）运算符之间最显着的区别在于，严格等于运算符不尝试类型转换。相反，严格相等运算符始终将不同类型的操作数视为不同。</p>
+<h2 id="例子-2">例子：</h2>
+<p>请注意，使用构造的字符串new String()是对象。如果将其中之一与字符串文字进行比较，则该String对象将被转换为字符串文字并对其内容进行比较。但是，如果两个操作数都是String对象，则将它们作为对象进行比较，并且必须引用相同的对象才能进行比较：</p>
+<pre><code>const string1 = &quot;hello&quot;;
+const string2 = String(&quot;hello&quot;);
+const string3 = new String(&quot;hello&quot;);
+const string4 = new String(&quot;hello&quot;);
+
+console.log(string1 == string2); // true
+console.log(string1 == string3); // true
+console.log(string2 == string3); // true
+console.log(string3 == string4); // false
+console.log(string4 == string4); // true
+</code></pre>
+<h1 id="-2">===</h1>
+<p>全等运算符 (===) 会检查它的两个操作数是否相等，并且返回一个布尔值结果。与相等运算符不同，全等运算符总是认为不同类型的操作数是不同的。</p>
+<h2 id="语法-3">语法：</h2>
+<p><code>x === y</code></p>
+<h2 id="描述-3">描述</h2>
+<p>全等运算符（=== 和 !==）使用全等比较算法来比较两个操作数。</p>
+<ul>
+<li>如果操作数的类型不同，则返回 false。</li>
+<li>如果两个操作数都是对象，只有当它们指向同一个对象时才返回 true。</li>
+<li>如果两个操作数都为 null，或者两个操作数都为 undefined，返回 true。</li>
+<li>如果两个操作数有任意一个为 NaN，返回 false。</li>
+<li>否则，比较两个操作数的值：
+<ul>
+<li>数字类型必须拥有相同的数值。+0 和 -0 会被认为是相同的值。</li>
+<li>字符串类型必须拥有相同顺序的相同字符。</li>
+<li>布尔运算符必须同时为 true 或同时为 false。</li>
+</ul>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/QJnvI1d6K/" class="tag">
+                    javascript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/ru-he-pan-duan-dui-xiang-shi-fou-you-mou-ge-shu-xing/">
+                  <h3 class="post-title">
+                    如何判断对象是否有某个属性
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

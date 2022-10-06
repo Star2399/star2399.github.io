@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>让Chrome支持小于12px 的文字方式有哪些？区别？ | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+一、背景
+
+Chrome 中文版浏览器会默认设定页面的最小字号是12px，英文版没有限制
+
+原由 Chrome 团队认为汉字小于12px就会增加识别难度
+
+
+中文版浏览器
+与网页语言无关，取决于用户在Chrome的设置里（chrome:/..." />
+    <meta name="keywords" content="css" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">让Chrome支持小于12px 的文字方式有哪些？区别？</h2>
+            <div class="post-date">2022-09-19</div>
+            
+            <div class="post-content" v-pre>
+              <figure data-type="image" tabindex="1"><img src="https://star2399.github.io/post-images/1663571765846.png" alt="" loading="lazy"></figure>
+<h1 id="一-背景">一、背景</h1>
+<blockquote>
+<p>Chrome 中文版浏览器会默认设定页面的最小字号是12px，英文版没有限制</p>
+</blockquote>
+<p>原由 Chrome 团队认为汉字小于12px就会增加识别难度</p>
+<ul>
+<li>
+<p>中文版浏览器<br>
+与网页语言无关，取决于用户在Chrome的设置里（chrome://settings/languages）把哪种语言设置为默认显示语言</p>
+</li>
+<li>
+<p>系统级最小字号<br>
+浏览器默认设定页面的最小字号，用户可以前往 chrome://settings/fonts 根据需求更改</p>
+</li>
+</ul>
+<p>而我们在实际项目中，不能奢求用户更改浏览器设置</p>
+<p>对于文本需要以更小的字号来显示，就需要用到一些小技巧</p>
+<h1 id="二-解决方案">二、解决方案</h1>
+<p>常见的解决方案有：</p>
+<ul>
+<li>zoom</li>
+<li>-webkit-transform()</li>
+<li>-webkit-text-size-adjust</li>
+</ul>
+<h2 id="zoom">zoom</h2>
+<blockquote>
+<p>zoom 的字面意思是“变焦”，可以改变页面上元素的尺寸，属于真实尺寸</p>
+</blockquote>
+<p>其支持的值类型有：</p>
+<ul>
+<li>zoom:50%，表示缩小到原来的一半</li>
+<li>zoom:0.5，表示缩小到原来的一半<br>
+使用 zoom 来”支持“ 12px 以下的字体,代码如下：</li>
+</ul>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    .span1{
+        font-size: 12px;
+        display: inline-block;
+        zoom: 0.8;
+    }
+    .span2{
+        display: inline-block;
+        font-size: 12px;
+    }
+&lt;/style&gt;
+&lt;body&gt;
+    &lt;span class=&quot;span1&quot;&gt;测试10px&lt;/span&gt;
+    &lt;span class=&quot;span2&quot;&gt;测试12px&lt;/span&gt;
+&lt;/body&gt;
+</code></pre>
+<p>效果如下：<br>
+<img src="https://star2399.github.io/post-images/1663573653813.png" alt="" loading="lazy"><br>
+需要注意的是，Zoom 并不是标准属性，需要考虑其兼容性</p>
+<h2 id="-webkit-transform">-webkit-transform</h2>
+<p>针对chrome浏览器,加webkit前缀，用transform:scale()这个属性进行放缩</p>
+<p>注意的是，使用scale属性只对可以定义宽高的元素生效，所以，下面代码中将span元素转为行内块元素<br>
+实现代码如下：</p>
+<pre><code>&lt;style type=&quot;text/css&quot;&gt;
+    .span1{
+        font-size: 12px;
+        display: inline-block;
+        -webkit-transform:scale(0.8);
+    }
+    .span2{
+        display: inline-block;
+        font-size: 12px;
+    }
+&lt;/style&gt;
+&lt;body&gt;
+    &lt;span class=&quot;span1&quot;&gt;测试10px&lt;/span&gt;
+    &lt;span class=&quot;span2&quot;&gt;测试12px&lt;/span&gt;
+&lt;/body&gt;
+</code></pre>
+<p>效果如下：<br>
+<img src="https://star2399.github.io/post-images/1663573768392.png" alt="" loading="lazy"></p>
+<h2 id="-webkit-text-size-adjust">-webkit-text-size-adjust</h2>
+<p>该属性用来设定文字大小是否根据设备(浏览器)来自动调整显示大小</p>
+<p>属性值：</p>
+<ul>
+<li>percentage：字体显示的大小；</li>
+<li>auto：默认，字体大小会根据设备/浏览器来自动调整；</li>
+<li>none:字体大小不会自动调整</li>
+</ul>
+<p><code>html { -webkit-text-size-adjust: none; }</code><br>
+这样设置之后会有一个问题，就是当你放大网页时，一般情况下字体也会随着变大，而设置了以上代码后，字体只会显示你当前设置的字体大小，不会随着网页放大而变大了</p>
+<p>所以，我们不建议全局应用该属性，而是单独对某一属性使用<br>
+需要注意的是，自从chrome 27之后，就取消了对这个属性的支持。同时，该属性只对英文、数字生效，对中文不生效</p>
+<h1 id="总结">总结</h1>
+<ul>
+<li>
+<p>Zoom 非标属性，有兼容问题，缩放会改变了元素占据的空间大小，触发重排</p>
+</li>
+<li>
+<p>-webkit-transform:scale() 大部分现代浏览器支持，并且对英文、数字、中文也能够生效，缩放不会改变了元素占据的空间大小，页面布局不会发生变化</p>
+</li>
+<li>
+<p>-webkit-text-size-adjust对谷歌浏览器有版本要求，在27之后，就取消了该属性的支持，并且只对英文、数字生效</p>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/HLPE3tREH/" class="tag">
+                    css
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/empxremvhvw-qu-bie/">
+                  <h3 class="post-title">
+                    em/px/rem/vh/vw区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

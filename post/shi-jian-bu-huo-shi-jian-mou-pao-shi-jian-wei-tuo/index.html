@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>事件捕获、事件冒泡、事件委托 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、事件捕获和冒泡
+1.1 事件冒泡
+
+在一个对象上触发某类事件（比如单击onclick事件），这个事件会向这个对象的父级对象传播，从里到外。父级对象所有同类事件都将被激活，或者它到达了对象层次的最顶层，即document对象
+
+
+1.2 ..." />
+    <meta name="keywords" content="javascript" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">事件捕获、事件冒泡、事件委托</h2>
+            <div class="post-date">2022-09-25</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="一-事件捕获和冒泡">一、事件捕获和冒泡</h1>
+<h2 id="11-事件冒泡">1.1 事件冒泡</h2>
+<blockquote>
+<p>在一个对象上触发某类事件（比如单击onclick事件），这个事件会向这个对象的父级对象传播，从里到外。父级对象所有同类事件都将被激活，或者它到达了对象层次的最顶层，即document对象<br>
+<img src="https://star2399.github.io/post-images/1664107313545.png" alt="" loading="lazy"></p>
+</blockquote>
+<h2 id="12-事件捕获">1.2 事件捕获</h2>
+<blockquote>
+<p>和事件冒泡相反，事件是从最外层向最内层传播，直到到达最具体的元素上<br>
+<img src="https://star2399.github.io/post-images/1664107464268.png" alt="" loading="lazy"></p>
+</blockquote>
+<h1 id="二-eventtargetaddeventlistener">二、EventTarget.addEventListener()</h1>
+<blockquote>
+<p>EventTarget.addEventListener() 方法将指定的监听器注册到 EventTarget 上，当该对象触发指定的事件时，指定的回调函数就会被执行。事件目标可以是一个文档上的元素 Element、Document 和 Window，也可以是任何支持事件的对象（比如 XMLHttpRequest）。</p>
+</blockquote>
+<h2 id="21-推荐使用-addeventlistener-来注册一个事件监听器理由如下">2.1 推荐使用 addEventListener() 来注册一个事件监听器，理由如下</h2>
+<ul>
+<li>它允许为一个事件添加多个监听器</li>
+<li>相比于 onXYZ 属性绑定来说，它提供了一种更精细的手段来控制 listener 的触发阶段</li>
+<li>它对任何事件都有效，而不仅仅是 HTML 或 SVG 元素。</li>
+</ul>
+<h2 id="22-工作原理">2.2 工作原理</h2>
+<ul>
+<li>addEventListener() 的工作原理是将实现 EventListener 的函数或对象添加到调用它的 EventTarget 上的指定事件类型的事件侦听器列表中。如果要绑定的函数或对象已经被添加到列表中，该函数或对象不会被再次添加。</li>
+</ul>
+<h2 id="23语法">2.3语法</h2>
+<pre><code>addEventListener(type, listener);
+addEventListener(type, listener, options);
+addEventListener(type, listener, useCapture);
+</code></pre>
+<h2 id="24-参数">2.4 参数</h2>
+<ul>
+<li>type
+<ul>
+<li>表示监听事件类型的大小写敏感的字符串。</li>
+</ul>
+</li>
+<li>listener
+<ul>
+<li>当所监听的事件类型触发时，会接收到一个事件通知（实现了 Event 接口的对象）对象。listener 必须是一个实现了 EventListener 接口的对象，或者是一个函数。有关回调本身的详细信息，请参阅事件监听回调</li>
+</ul>
+</li>
+<li>options （可选）
+<ul>
+<li>一个指定有关 listener 属性的可选参数对象。可用的选项如下：
+<ul>
+<li>capture（可选）
+<ul>
+<li>一个布尔值，表示 listener 会在该类型的事件捕获阶段传播到该 EventTarget 时触发。</li>
+</ul>
+</li>
+<li>once（可选）
+<ul>
+<li>一个布尔值，表示 listener 在添加之后最多只调用一次。如果为 true，listener 会在其被调用之后自动移除。</li>
+</ul>
+</li>
+<li>passive（可选）
+<ul>
+<li>一个布尔值，设置为 true 时，表示 listener 永远不会调用 preventDefault()。如果 listener 仍然调用了这个函数，客户端将会忽略它并抛出一个控制台警告</li>
+</ul>
+</li>
+<li>signal（可选）
+<ul>
+<li>AbortSignal，该 AbortSignal 的 abort() 方法被调用时，监听器会被移除。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>useCapture
+<ul>
+<li>指定是冒泡阶段触发还是捕获阶段触发，为false表示冒泡阶段触发。默认为false。</li>
+</ul>
+</li>
+</ul>
+<h1 id="三-事件捕获和冒泡的实行顺序">三、事件捕获和冒泡的实行顺序</h1>
+<ol>
+<li>事件捕获过程： 当我们点击 TEXT时，首先时window-&gt; document -&gt; body -&gt; div -&gt; text,这个过程称为事件捕获,W3C浏览器的标准执行流程</li>
+<li>事件冒泡过程:text -&gt; div -&gt; body -&gt; document -&gt; window,这个过程称为事件冒泡.IE浏览器只支持冒泡,不支持捕获,W3C 浏览器先执行捕获,后执行冒泡</li>
+<li>对于触发的元素来说，捕获和冒泡的执行顺序取决于代码的书写顺序，谁在前面执行谁<br>
+<img src="https://star2399.github.io/post-images/1664107525257.png" alt="" loading="lazy"></li>
+</ol>
+<h1 id="四-如何阻止事件冒泡">四、如何阻止事件冒泡</h1>
+<h2 id="41-方式一">4.1 方式一</h2>
+<p>event.stopPropagation( )</p>
+<h2 id="42-方式二">4.2 方式二</h2>
+<p>return false;</p>
+<h2 id="43-区别">4.3 区别</h2>
+<p>return false 不仅阻止了事件往上冒泡，而且阻止了事件本身。event.stopPropagation() 则只阻止事件往上冒泡，不阻止事件本身。</p>
+<h1 id="五-事件委托">五、事件委托</h1>
+<blockquote>
+<p>其实是利用事件冒泡，让上级元素来处理，这样就避免了给每个元素添加事件处理器</p>
+</blockquote>
+<h2 id="优点">优点</h2>
+<ol>
+<li>减少事件注册,节省内存</li>
+<li>简化了dom节点更新时,相应事件的更新</li>
+<li>不用在新添加的li上绑定click事件</li>
+<li>当删除某个li时,不用移解绑上面的click事件</li>
+</ol>
+<h2 id="缺点">缺点</h2>
+<ol>
+<li>事件委托基于冒泡,对于不冒泡的事件不支持</li>
+<li>层级过多,冒泡过程中,可能会被阻止掉.</li>
+<li>理论上委托会导致浏览器频繁调用处理函数,虽然很可能不需要处理,所以建议就近委托</li>
+<li>把所有事件都用代理就可能会出来事件误判,比如,在document 中 代理了所有 button的click事件,另外的人在引用该js时,可能不知道,造成单击button触发了两个click事件</li>
+</ol>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/QJnvI1d6K/" class="tag">
+                    javascript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/content-type-xiang-jie/">
+                  <h3 class="post-title">
+                    Content-Type 详解
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

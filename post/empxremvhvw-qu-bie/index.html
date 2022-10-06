@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>em/px/rem/vh/vw区别 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+一、介绍
+
+传统的项目开发中，我们只会用到px、%、em这几个单位，它可以适用于大部分的项目开发，且拥有比较良好的兼容性
+从CSS3开始，浏览器对计量单位的支持又提升到了另外一个境界，新增了rem、vh、vw、vm等一些新的计量单位
+利用..." />
+    <meta name="keywords" content="css" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">em/px/rem/vh/vw区别</h2>
+            <div class="post-date">2022-09-19</div>
+            
+            <div class="post-content" v-pre>
+              <figure data-type="image" tabindex="1"><img src="https://star2399.github.io/post-images/1663569521628.png" alt="" loading="lazy"></figure>
+<h1 id="一-介绍">一、介绍</h1>
+<ul>
+<li>传统的项目开发中，我们只会用到px、%、em这几个单位，它可以适用于大部分的项目开发，且拥有比较良好的兼容性</li>
+<li>从CSS3开始，浏览器对计量单位的支持又提升到了另外一个境界，新增了rem、vh、vw、vm等一些新的计量单位</li>
+<li>利用这些新的单位开发出比较良好的响应式页面，适应多种不同分辨率的终端，包括移动设备等</li>
+</ul>
+<h1 id="二-单位">二、单位</h1>
+<p>在<code>css</code>单位中，可以分为长度单位、绝对单位，如下表所指示：</p>
+<table>
+<thead>
+<tr>
+<th>CSS单位</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>相对长度单位</td>
+<td>em、ex、ch、rem、vw、vh、vmin、vmax、%</td>
+</tr>
+<tr>
+<td>绝对长度单位</td>
+<td>cm、mm、in、px、pt、pc</td>
+</tr>
+</tbody>
+</table>
+<h2 id="px">px</h2>
+<blockquote>
+<p>px，表示像素，所谓像素就是呈现在我们显示器上的一个个小点，每个像素点都是大小等同的，所以像素为计量单位被分在了绝对长度单位中</p>
+</blockquote>
+<ul>
+<li>有些人会把px认为是相对长度，原因在于在移动端中存在设备像素比，px实际显示的大小是不确定的</li>
+<li>这里之所以认为px为绝对单位，在于px的大小和元素的其他属性无关</li>
+</ul>
+<h2 id="em">em</h2>
+<blockquote>
+<p>em是相对长度单位。相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸（1em = 16px）</p>
+</blockquote>
+<ul>
+<li>为了简化 font-size 的换算，我们需要在css中的 body 选择器中声明font-size= 62.5%，这就使 em 值变为 16px*62.5% = 10px</li>
+<li>这样 12px = 1.2em, 10px = 1em, 也就是说只需要将你的原来的 px 数值除以 10，然后换上 em 作为单位就行了</li>
+<li>特点：
+<ul>
+<li>em 的值并不是固定的</li>
+<li>em 会继承父级元素的字体大小</li>
+<li>em 是相对长度单位。相对于当前对象内文本的字体尺寸。如当前对行内文本的字体尺寸未被人为设置，则相对于浏览器的默认字体尺寸</li>
+<li>任意浏览器的默认字体高都是 16px</li>
+</ul>
+</li>
+</ul>
+<h2 id="rem">rem</h2>
+<blockquote>
+<p>rem，相对单位，相对的只是HTML根元素font-size的值</p>
+</blockquote>
+<ul>
+<li>
+<p>同理，如果想要简化font-size的转化，我们可以在根元素html中加入font-size: 62.5%</p>
+</li>
+<li>
+<p>特点：</p>
+<ul>
+<li>rem单位可谓集相对大小和绝对大小的优点于一身</li>
+<li>和em不同的是rem总是相对于根元素，而不像em一样使用级联的方式来计算尺寸</li>
+</ul>
+</li>
+</ul>
+<h2 id="vh-vw">vh、vw</h2>
+<blockquote>
+<p>vw ，就是根据窗口的宽度，分成100等份，100vw就表示满宽，50vw就表示一半宽。（vw 始终是针对窗口的宽），同理，vh则为窗口的高度</p>
+</blockquote>
+<ul>
+<li>
+<p>这里的窗口分成几种情况：</p>
+<ul>
+<li>在桌面端，指的是浏览器的可视区域</li>
+<li>移动端指的就是布局视口</li>
+</ul>
+</li>
+<li>
+<p>像vw、vh，比较容易混淆的一个单位是%，不过百分比宽泛的讲是相对于父元素：</p>
+<ul>
+<li>对于普通定位元素就是我们理解的父元素</li>
+<li>对于position: absolute;的元素是相对于已定位的父元素<br>
+-对于position: fixed;的元素是相对于 ViewPort（可视窗口）</li>
+</ul>
+</li>
+</ul>
+<h1 id="总结">总结</h1>
+<ul>
+<li>
+<p>px：绝对单位，页面按精确像素展示</p>
+</li>
+<li>
+<p>em：相对单位，基准点为父节点字体的大小，如果自身定义了font-size按自身来计算，整个页面内1em不是一个固定的值</p>
+</li>
+<li>
+<p>rem：相对单位，可理解为root em, 相对根节点html的字体大小来计算</p>
+</li>
+<li>
+<p>vh、vw：主要用于页面视口大小布局，在页面布局上更加方便简单</p>
+</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/HLPE3tREH/" class="tag">
+                    css
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/she-bei-xiang-su-css-xiang-su-she-bei-du-li-xiang-su-dprppi-zhi-jian-de-qu-bie/">
+                  <h3 class="post-title">
+                    设备像素、css像素、设备独立像素、dpr、ppi 之间的区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

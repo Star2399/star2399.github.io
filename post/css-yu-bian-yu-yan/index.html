@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Css预编语言 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="是什么
+
+
+Css 作为一门标记性语言，语法相对简单，对使用者的要求较低，但同时也带来一些问题
+
+
+需要书写大量看似没有逻辑的代码，不方便维护及扩展，不利于复用，尤其对于非前端开发工程师来讲，往往会因为缺少 Css 编写经验而很难写出组织良..." />
+    <meta name="keywords" content="css" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Css预编语言</h2>
+            <div class="post-date">2022-09-21</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="是什么">是什么</h1>
+<ul>
+<li>
+<p>Css 作为一门标记性语言，语法相对简单，对使用者的要求较低，但同时也带来一些问题</p>
+</li>
+<li>
+<p>需要书写大量看似没有逻辑的代码，不方便维护及扩展，不利于复用，尤其对于非前端开发工程师来讲，往往会因为缺少 Css 编写经验而很难写出组织良好且易于维护的 Css 代码</p>
+</li>
+<li>
+<p>Css预处理器便是针对上述问题的解决方案</p>
+</li>
+</ul>
+<h2 id="预处理语言">预处理语言</h2>
+<ul>
+<li>
+<p>扩充了 Css 语言，增加了诸如变量、混合（mixin）、函数等功能，让 Css 更易维护、方便</p>
+</li>
+<li>
+<p>本质上，预处理是Css的超集</p>
+</li>
+<li>
+<p>包含一套自定义的语法及一个解析器，根据这些语法定义自己的样式规则，这些规则最终会通过解析器，编译生成对应的 Css 文件</p>
+</li>
+</ul>
+<h1 id="有哪些">有哪些</h1>
+<p><code>Css</code>预编译语言在前端里面有三大优秀的预编处理器，分别是：</p>
+<ul>
+<li>sass</li>
+<li>less</li>
+<li>stylus</li>
+</ul>
+<h2 id="sassscss">sass/scss</h2>
+<p>2007 年诞生，最早也是最成熟的 Css 预处理器，拥有 Ruby 社区的支持和 Compass 这一最强大的 Css 框架，目前受 LESS 影响，已经进化到了全面兼容 Css 的 Scss</p>
+<p>文件后缀名为.sass与scss，可以严格按照 sass 的缩进方式省去大括号和分号</p>
+<h2 id="less">less</h2>
+<p>2009年出现，受SASS的影响较大，但又使用 Css 的语法，让大部分开发者和设计师更容易上手，在 Ruby 社区之外支持者远超过 SASS</p>
+<p>其缺点是比起 SASS 来，可编程功能不够，不过优点是简单和兼容 Css，反过来也影响了 SASS 演变到了 Scss 的时代</p>
+<h2 id="stylus">stylus</h2>
+<p>Stylus 是一个Css的预处理框架，2010 年产生，来自 Node.js 社区，主要用来给 Node 项目进行 Css 预处理支持</p>
+<p>所以 Stylus 是一种新型语言，可以创建健壮的、动态的、富有表现力的 Css。比较年轻，其本质上做的事情与SASS/LESS等类似</p>
+<h1 id="区别">区别</h1>
+<p>虽然各种预处理器功能强大，但使用最多的，还是以下特性：</p>
+<ul>
+<li>变量（variables）</li>
+<li>作用域（scope）</li>
+<li>代码混合（ mixins）</li>
+<li>嵌套（nested rules）</li>
+<li>代码模块化（Modules）</li>
+</ul>
+<p>因此，下面就展开这些方面的区别</p>
+<h2 id="基本使用">基本使用</h2>
+<p>less和scss</p>
+<pre><code>.box {
+  display: block;
+}
+</code></pre>
+<p>sass</p>
+<pre><code>.box
+  display: block
+</code></pre>
+<p>stylus</p>
+<pre><code>.box
+  display: block
+</code></pre>
+<h2 id="嵌套">嵌套</h2>
+<p>三者的嵌套语法都是一致的，甚至连引用父级选择器的标记 &amp; 也相同</p>
+<p>区别只是 Sass 和 Stylus 可以用没有大括号的方式书写</p>
+<p>less</p>
+<pre><code>.a {
+  &amp;.b {
+    color: red;
+  }
+}
+</code></pre>
+<h2 id="变量">变量</h2>
+<p>变量无疑为 Css 增加了一种有效的复用方式，减少了原来在 Css 中无法避免的重复「硬编码」</p>
+<p>less声明的变量必须以@开头，后面紧跟变量名和变量值，而且变量名和变量值需要使用冒号:分隔开</p>
+<pre><code>@red: #c00;
+
+strong {
+  color: @red;
+}
+
+</code></pre>
+<p>sass声明的变量跟less十分的相似，只是变量名前面使用$开头</p>
+<pre><code>$red: #c00;
+
+strong {
+  color: $red;
+}
+</code></pre>
+<p>stylus声明的变量没有任何的限定，可以使用$开头，结尾的分号;可有可无，但变量与变量值之间需要使用=</p>
+<p>在stylus中我们不建议使用@符号开头声明变量</p>
+<pre><code>red = #c00
+
+strong
+  color: red
+</code></pre>
+<h2 id="作用域">作用域</h2>
+<p>Css 预编译器把变量赋予作用域，也就是存在生命周期。就像 js 一样，它会先从局部作用域查找变量，依次向上级作用域查找</p>
+<p>sass中不存在全局变量</p>
+<pre><code>$color: black;
+.scoped {
+  $bg: blue;
+  $color: white;
+  color: $color;
+  background-color:$bg;
+}
+.unscoped {
+  color:$color;
+} 
+</code></pre>
+<p>编译后：</p>
+<pre><code>.scoped {
+  color:white;/*是白色*/
+  background-color:blue;
+}
+.unscoped {
+  color:white;/*白色（无全局变量概念）*/
+} 
+</code></pre>
+<p>所以，在sass中最好不要定义相同的变量名</p>
+<p>less与stylus的作用域跟javascript十分的相似，首先会查找局部定义的变量，如果没有找到，会像冒泡一样，一级一级往下查找，直到根为止</p>
+<pre><code>@color: black;
+.scoped {
+  @bg: blue;
+  @color: white;
+  color: @color;
+  background-color:@bg;
+}
+.unscoped {
+  color:@color;
+} 
+</code></pre>
+<p>编译后：</p>
+<pre><code>.scoped {
+  color:white;/*白色（调用了局部变量）*/
+  background-color:blue;
+}
+.unscoped {
+  color:black;/*黑色（调用了全局变量）*/
+} 
+</code></pre>
+<h2 id="混入">混入</h2>
+<p>混入（mixin）应该说是预处理器最精髓的功能之一了，简单点来说，Mixins可以将一部分样式抽出，作为单独定义的模块，被很多选择器重复使用</p>
+<p>可以在Mixins中定义变量或者默认参数</p>
+<p>在less中，混合的用法是指将定义好的ClassA中引入另一个已经定义的Class，也能使用够传递参数，参数变量为@声明</p>
+<pre><code>.alert {
+  font-weight: 700;
+}
+
+.highlight(@color: red) {
+  font-size: 1.2em;
+  color: @color;
+}
+
+.heads-up {
+  .alert;
+  .highlight(red);
+}
+</code></pre>
+<p>编译后</p>
+<pre><code>.alert {
+  font-weight: 700;
+}
+.heads-up {
+  font-weight: 700;
+  font-size: 1.2em;
+  color: red;
+}
+</code></pre>
+<p>Sass声明mixins时需要使用@mixinn，后面紧跟mixin的名，也可以设置参数，参数名为变量$声明的形式</p>
+<pre><code>@mixin large-text {
+  font: {
+    family: Arial;
+    size: 20px;
+    weight: bold;
+  }
+  color: #ff0000;
+}
+
+.page-title {
+  @include large-text;
+  padding: 4px;
+  margin-top: 10px;
+}
+</code></pre>
+<p>stylus中的混合和前两款Css预处理器语言的混合略有不同，他可以不使用任何符号，就是直接声明Mixins名，然后在定义参数和默认值之间用等号（=）来连接</p>
+<pre><code>error(borderWidth= 2px) {
+  border: borderWidth solid #F00;
+  color: #F00;
+}
+.generic-error {
+  padding: 20px;
+  margin: 4px;
+  error(); /* 调用error mixins */
+}
+.login-error {
+  left: 12px;
+  position: absolute;
+  top: 20px;
+  error(5px); /* 调用error mixins，并将参数$borderWidth的值指定为5px */
+} 
+</code></pre>
+<h2 id="代码模块化">代码模块化</h2>
+<p>模块化就是将Css代码分成一个个模块</p>
+<p>scss、less、stylus三者的使用方法都如下所示</p>
+<pre><code>@import './common';
+@import './github-markdown';
+@import './mixin';
+@import './variables';
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/HLPE3tREH/" class="tag">
+                    css
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/ifc/">
+                  <h3 class="post-title">
+                    IFC
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

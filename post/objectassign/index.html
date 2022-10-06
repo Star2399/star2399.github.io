@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Object.assign() | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、基本用法
+Object.assign()方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。
+const target = { a: 1 }
+
+const source1 = { b: 2 }
+..." />
+    <meta name="keywords" content="javascript" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Object.assign()</h2>
+            <div class="post-date">2022-09-21</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="一-基本用法">一、基本用法</h1>
+<p>Object.assign()方法用于对象的合并，将源对象（source）的所有可枚举属性，复制到目标对象（target）。</p>
+<pre><code>const target = { a: 1 }
+
+const source1 = { b: 2 }
+const source2 = { c: 3 }
+
+Object.assign(target, source1, source2)
+target // {a:1, b:2, c:3}
+</code></pre>
+<ul>
+<li><strong>Object.assign() 方法的第一个参数是目标对象，后面的参数都是源对象。</strong></li>
+<li><strong>注意，如果目标对象与源对象有同名属性，或多个源对象有同名属性，则后面的属性会覆盖前面的属性。</strong></li>
+</ul>
+<pre><code>const target = { a: 1, b: 1 }
+
+const source1 = { b: 2, c: 2 }
+const source2 = { c: 3 }
+
+Object.assign(target, source1, source2)
+target // {a:1, b:2, c:3}
+</code></pre>
+<h2 id="1如果只有一个参数-objectassign会直接返回该参数">1.如果只有一个参数， Object.assign()会直接返回该参数。</h2>
+<pre><code>const obj = {a: 1};
+Object.assign(obj) === obj // true
+</code></pre>
+<h2 id="2如果该参数不是对象则会先转成对象然后返回">2.如果该参数不是对象，则会先转成对象，然后返回</h2>
+<pre><code>typeof Object.assign(2)
+//'object'
+</code></pre>
+<h2 id="3如果参数是undefined或null由于-undefined和-null无法转成对象会报错">3.如果参数是undefined或null，由于 undefined和 null无法转成对象，会报错</h2>
+<pre><code>Object.assign(undefined)
+Object.assign(null)
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://star2399.github.io/post-images/1663740934377.png" alt="" loading="lazy"></figure>
+<h2 id="4非对象参数出现在源对象的位置">4.非对象参数出现在源对象的位置</h2>
+<ul>
+<li>如果非对象参数出现在源对象的位置（即非首参数），那么处理规则有所不同。首先， 这些参数都会转成对象，如果无法转成对象，就会跳过。这意味着，如果 undefined和 null不在首参数，就不会报错。</li>
+</ul>
+<pre><code>let obj = {a: 1};
+Object.assign(obj, undefined) === obj
+Object.assign(obj, null) === obj
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://star2399.github.io/post-images/1663740998042.png" alt="" loading="lazy"></figure>
+<ul>
+<li>其他类型的值（即数值、字符串和布尔值）不在首参数，也不会报错。但是，除了字 符串会以数组形式，拷贝入目标对象，其他值都不会产生效果。</li>
+</ul>
+<h3 id="原因如下">原因如下</h3>
+<pre><code>Object(true) // {[[PrimitiveValue]]: true}
+Object(10)  //  {[[PrimitiveValue]]: 10}
+Object('abc') // {0: &quot;a&quot;, 1: &quot;b&quot;, 2: &quot;c&quot;, length: 3, [[PrimitiveValue]]: &quot;abc&quot;}
+</code></pre>
+<figure data-type="image" tabindex="3"><img src="https://star2399.github.io/post-images/1663741074067.png" alt="" loading="lazy"></figure>
+<p>上面代码中，布尔值、数值、字符串分别转成对应的包装对象，可以看到 它们的原始值都在包装对象的内部属性 [[PrimitiveValue]] 上面，这个属性是不会被 Object.assign()拷贝的。只有字符串的包装对象，会产生可枚举的实义属性，那些属性则会被拷贝。</p>
+<h2 id="5objectassign拷贝的属性是有限制的-只拷贝源对象的自身属性不拷贝继承属性也不拷贝不可枚举的属性-enumerable-false">5.Object.assign()拷贝的属性是有限制的， 只拷贝源对象的自身属性（不拷贝继承属性），也不拷贝不可枚举的属性（ enumerable: false）。</h2>
+<h1 id="二-注意点">二、注意点</h1>
+<h2 id="1objectassign-浅拷贝">1.Object.assign() 浅拷贝</h2>
+<ul>
+<li>Object.assign()方法实行的是浅拷贝，而不是深拷贝。也就是说，如果源对象某个属性的值是对象，那么目标对象拷贝得到的是这个对象的引用。</li>
+</ul>
+<h2 id="2替换同名属性">2.替换同名属性</h2>
+<ul>
+<li>对于这种嵌套的对象，一旦遇到同名属性， Object.assign()的处理方法是替换，而不是添加。</li>
+</ul>
+<h2 id="3处理数组时会把数组视为对象">3.处理数组时会把数组视为对象</h2>
+<ul>
+<li>Object.assign()可以用来处理数组，但是会把数组视为对象。</li>
+</ul>
+<pre><code>Object.assign([1, 2, 3], [4, 5])
+// [4, 5, 3]
+</code></pre>
+<p>上面代码中， Object.assign()把数组视为属性名为 0、1、2 的对象，因此源数组的 0 号属性 4覆盖了目标数组的 0 号属性 1。</p>
+<h2 id="4取值函数求值后再复制">4.取值函数求值后再复制</h2>
+<ul>
+<li>Object.assign()只能进行值的复制，如果要复制的值是一个取值函数，那么将求值后再复制。</li>
+</ul>
+<pre><code>const source = {
+  get foo() { return 1 }
+};
+const target = {};
+
+Object.assign(target, source)
+//{foo:1}
+</code></pre>
+<p>上面代码中， source对象的 foo属性是一个取值函数， Object.assign()不会复制这个取值函数，只会拿到值以后，将这个值复制过去。</p>
+<h1 id="三-常见用途">三、常见用途</h1>
+<h2 id="1为对象添加属性">（1）为对象添加属性</h2>
+<h2 id="2为对象添加方法">（2）为对象添加方法</h2>
+<h2 id="3克隆对象">（3）克隆对象</h2>
+<h2 id="4合并多个对象">（4）合并多个对象</h2>
+<h2 id="5为属性指定默认值">（5）为属性指定默认值</h2>
+<pre><code>const DEFAULTS = {
+  logLevel: 0,
+  outputFormat: 'html'
+}
+
+function processContent(options) {
+  options = Object.assign({}, DEFAULTS, options)
+  console.log(options)
+  // ...
+
+}
+</code></pre>
+<p>上面代码中， DEFAULTS对象是默认值， options对象是用户提供的参数。 Object.assign()方法将 DEFAULTS和 options合并成一个新对象，如果两者有同名属性，则 options的属性值会覆盖 DEFAULTS的属性值。</p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/QJnvI1d6K/" class="tag">
+                    javascript
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/objectisde-qu-bie/">
+                  <h3 class="post-title">
+                    Object.is()、==、===的区别
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

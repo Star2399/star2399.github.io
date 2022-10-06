@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>如何实现单行／多行文本溢出的省略样式 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="前言
+在日常开发展示页面，如果一段文本的数量过长，受制于元素宽度的因素，有可能不能完全显示，为了提高用户的使用体验，这个时候就需要我们把溢出的文本显示成省略号
+对于文本的溢出，我们可以分成两种形式：
+
+单行文本溢出
+多行文本溢出
+
+实现方式..." />
+    <meta name="keywords" content="css" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">如何实现单行／多行文本溢出的省略样式</h2>
+            <div class="post-date">2022-09-21</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="前言">前言</h1>
+<p>在日常开发展示页面，如果一段文本的数量过长，受制于元素宽度的因素，有可能不能完全显示，为了提高用户的使用体验，这个时候就需要我们把溢出的文本显示成省略号</p>
+<p>对于文本的溢出，我们可以分成两种形式：</p>
+<ul>
+<li>单行文本溢出</li>
+<li>多行文本溢出</li>
+</ul>
+<h1 id="实现方式">实现方式</h1>
+<h2 id="单行文本溢出省略">单行文本溢出省略</h2>
+<p>理解也很简单，即文本在一行内显示，超出部分以省略号的形式展现</p>
+<p>实现方式也很简单，涉及的css属性有：</p>
+<ul>
+<li>text-overflow：规定当文本溢出时，显示省略符号来代表被修剪的文本</li>
+<li>white-space：设置文字在一行显示，不能换行</li>
+<li>overflow：文字长度超出限定宽度，则隐藏超出的内容</li>
+</ul>
+<p>overflow设为hidden，普通情况用在块级元素的外层隐藏内部溢出元素，或者配合下面两个属性实现文本溢出省略</p>
+<p>white-space:nowrap，作用是设置文本不换行，是overflow:hidden和text-overflow：ellipsis生效的基础</p>
+<p>text-overflow属性值有如下(有一些没写)：</p>
+<ul>
+<li>clip：当对象内文本溢出部分裁切掉</li>
+<li>ellipsis：当对象内文本溢出时显示省略标记（...）</li>
+</ul>
+<p>text-overflow只有在设置了overflow:hidden和white-space:nowrap才能够生效的</p>
+<p>举个例子：</p>
+<pre><code>&lt;style&gt;
+    p{
+        overflow: hidden;
+        line-height: 40px;
+        width:400px;
+        height:40px;
+        border:1px solid red;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+&lt;/style&gt;
+&lt;p 这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本&lt;/p &gt;
+</code></pre>
+<p>效果如下：<br>
+<img src="https://star2399.github.io/post-images/1663735189291.png" alt="" loading="lazy"><br>
+可以看到，设置单行文本溢出较为简单，并且省略号显示的位置较好</p>
+<h2 id="多行文本溢出省略">多行文本溢出省略</h2>
+<p>多行文本溢出的时候，我们可以分为两种情况：</p>
+<ul>
+<li>基于高度截断</li>
+<li>基于行数截断</li>
+</ul>
+<h3 id="基于高度截断">基于高度截断</h3>
+<h4 id="伪元素-定位">伪元素 + 定位</h4>
+<p>核心的css代码结构如下：</p>
+<ul>
+<li>position: relative：为伪元素绝对定位</li>
+<li>overflow: hidden：文本溢出限定的宽度就隐藏内容）</li>
+<li>position: absolute：给省略号绝对定位</li>
+<li>line-height: 20px：结合元素高度,高度固定的情况下,设定行高, 控制显示行数</li>
+<li>height: 40px：设定当前元素高度</li>
+<li>::after {} ：设置省略号样式</li>
+<li>设置为元素的背景色和之前的一样</li>
+</ul>
+<p>代码如下所示：</p>
+<pre><code>&lt;style&gt;
+    .demo {
+        position: relative;
+        line-height: 20px;
+        height: 40px;
+        overflow: hidden;
+        background-color: white;
+    }
+    .demo::after {
+        content: &quot;...&quot;;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 20px 0 10px;
+       	background-color: white;
+    }
+&lt;/style&gt;
+
+&lt;body&gt;
+    &lt;div class='demo'&gt;这是一段很长的文本&lt;/div&gt;
+&lt;/body&gt;
+</code></pre>
+<p>实现原理很好理解，就是通过伪元素绝对定位到行尾并遮住文字，再通过 overflow: hidden 隐藏多余文字</p>
+<p>这种实现具有以下优点：</p>
+<ul>
+<li>兼容性好，对各大主流浏览器有好的支持</li>
+<li>响应式截断，根据不同宽度做出调整</li>
+</ul>
+<p>一般文本存在英文的时候，可以设置word-break: break-all使一个单词能够在换行时进行拆分</p>
+<h3 id="基于行数截断">基于行数截断</h3>
+<p>纯css实现也非常简单，核心的css代码如下：</p>
+<ul>
+<li>-webkit-line-clamp: 2：用来限制在一个块元素显示的文本的行数，为了实现该效果，它需要组合其他的WebKit属性）</li>
+<li>display: -webkit-box：和1结合使用，将对象作为弹性伸缩盒子模型显示</li>
+<li>-webkit-box-orient: vertical：和1结合使用 ，设置或检索伸缩盒对象的子元素的排列方式</li>
+<li>overflow: hidden：文本溢出限定的宽度就隐藏内容</li>
+<li>text-overflow: ellipsis：多行文本的情况下，用省略号“…”隐藏溢出范围的文本</li>
+</ul>
+<pre><code>&lt;style&gt;
+    p {
+        width: 400px;
+        border-radius: 1px solid red;
+        -webkit-line-clamp: 2;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+&lt;/style&gt;
+&lt;p&gt;
+    这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本
+    这是一些文本这是一些文本这是一些文本这是一些文本这是一些文本
+&lt;/p &gt;
+</code></pre>
+<p>效果如下：<br>
+<img src="https://star2399.github.io/post-images/1663736109566.png" alt="" loading="lazy"></p>
+<p>可以看到，上述使用了webkit的CSS属性扩展，所以兼容浏览器范围是PC端的webkit内核的浏览器，由于移动端大多数是使用webkit，所以移动端常用该形式</p>
+<p>需要注意的是，如果文本为一段很长的英文或者数字，则需要添加word-wrap: break-word属性</p>
+<p>还能通过使用javascript实现配合css，实现代码如下所示：</p>
+<p>css结构如下：</p>
+<pre><code>p {
+    position: relative;
+    width: 400px;
+    line-height: 20px;
+    overflow: hidden;
+
+}
+.p-after:after{
+    content: &quot;...&quot;; 
+    position: absolute; 
+    bottom: 0; 
+    right: 0; 
+    padding-left: 40px;
+    background: -webkit-linear-gradient(left, transparent, #fff 55%);
+    background: -moz-linear-gradient(left, transparent, #fff 55%);
+    background: -o-linear-gradient(left, transparent, #fff 55%);
+    background: linear-gradient(to right, transparent, #fff 55%);
+}
+</code></pre>
+<p>javascript代码如下：</p>
+<pre><code>$(function(){
+ //获取文本的行高，并获取文本的高度，假设我们规定的行数是五行，那么对超过行数的部分进行限制高度，并加上省略号
+   $('p').each(function(i, obj){
+        var lineHeight = parseInt($(this).css(&quot;line-height&quot;));
+        var height = parseInt($(this).height());
+        if((height / lineHeight) &gt;3 ){
+            $(this).addClass(&quot;p-after&quot;)
+            $(this).css(&quot;height&quot;,&quot;60px&quot;);
+        }else{
+            $(this).removeClass(&quot;p-after&quot;);
+        }
+    });
+})
+</code></pre>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/HLPE3tREH/" class="tag">
+                    css
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/css-yu-bian-yu-yan/">
+                  <h3 class="post-title">
+                    Css预编语言
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>

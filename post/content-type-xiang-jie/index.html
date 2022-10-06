@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Content-Type 详解 | Star的个人博客</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://star2399.github.io/favicon.ico?v=1665043922722">
+<link rel="stylesheet" href="https://star2399.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="一、Content-Type
+Content-Type（MediaType），即是Internet Media Type，互联网媒体类型，也叫做MIME类型。在互联网中有成百上千中不同的数据类型，HTTP在传输数据对象时会为他们打上称为MI..." />
+    <meta name="keywords" content="计算机网络" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://star2399.github.io">
+        <img src="https://star2399.github.io/images/avatar.png?v=1665043922722" class="site-logo">
+        <h1 class="site-title">Star的个人博客</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="https://star2399.github.io/post/shou-ye" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      温故而知新
+    </div>
+    <div class="site-footer">
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a class="rss" href="https://star2399.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Content-Type 详解</h2>
+            <div class="post-date">2022-09-25</div>
+            
+            <div class="post-content" v-pre>
+              <h1 id="一-content-type">一、Content-Type</h1>
+<p>Content-Type（MediaType），即是Internet Media Type，互联网媒体类型，也叫做MIME类型。在互联网中有成百上千中不同的数据类型，HTTP在传输数据对象时会为他们打上称为MIME的数据格式标签，用于区分数据类型。最初MIME是用于电子邮件系统的，后来HTTP也采用了这一方案。</p>
+<p>在HTTP协议消息头中，使用Content-Type来表示请求和响应中的媒体类型信息。它用来告诉服务端如何处理请求的数据，以及告诉客户端（一般是浏览器）如何解析响应的数据，比如显示图片，解析并展示html等等。</p>
+<h2 id="content-type的格式">Content-Type的格式</h2>
+<p>Content-Type：type/subtype ;parameter</p>
+<ul>
+<li>type：主类型，任意的字符串，如text，如果是*号代表所有；</li>
+<li>subtype：子类型，任意的字符串，如html，如果是*号代表所有，用“/”与主类型隔开；</li>
+<li>parameter：可选参数，如charset，boundary等。</li>
+</ul>
+<h1 id="二-常见content-type">二、常见Content-Type</h1>
+<ul>
+<li>HTML文档标记：text/html;</li>
+<li>普通ASCII文档标记：text/html;</li>
+<li>JPEG图片标记：image/jpeg;</li>
+<li>GIF图片标记：image/gif;</li>
+<li>js文档标记：application/javascript;</li>
+<li>xml文件标记：application/xml;</li>
+</ul>
+<h2 id="applicationx-www-form-urlencoded">application/x-www-form-urlencoded</h2>
+<p>HTTP会将请求参数用key1=val1&amp;key2=val2的方式进行组织，并放到请求实体里面，注意如果是中文或特殊字符如&quot;/&quot;、&quot;,&quot;、“:&quot; 等会自动进行URL转码。不支持文件，一般用于表单提交。</p>
+<h2 id="multipartform-data">multipart/form-data</h2>
+<p>与application/x-www-form-urlencoded不同，这是一个多部分多媒体类型。首先生成了一个 boundary 用于分割不同的字段，在请求实体里每个参数以------boundary开始，然后是附加信息和参数名，然后是空行，最后是参数内容。多个参数将会有多个boundary块。如果参数是文件会有特别的文件域。最后以------boundary–为结束标识。multipart/form-data支持文件上传的格式，一般需要上传文件的表单则用该类型。<br>
+<img src="https://star2399.github.io/post-images/1664091894478.png" alt="" loading="lazy"></p>
+<h2 id="applicationjson">application/json</h2>
+<p>JSON 是一种轻量级的数据格式，以“键-值”对的方式组织的数据。这个使用这个类型，需要参数本身就是json格式的数据，参数会被直接放到请求实体里，不进行任何处理。服务端/客户端会按json格式解析数据（约定好的情况下）。</p>
+<h2 id="applicationxml-和-textxml">application/xml 和 text/xml</h2>
+<p>与application/json类似，这里用的是xml格式的数据，text/xml的话，将忽略xml数据里的编码格式</p>
+<h1 id="三-content-type的使用">三、Content-Type的使用</h1>
+<h2 id="request">request</h2>
+<ul>
+<li>如果是一个restful接口（json格式），一般将Content-Type设置为application/json; charset=UTF-8；</li>
+<li>如果是文件上传，一般Content-Type设置为multipart/form-data</li>
+<li>如果普通表单提交，一般Content-Type设置为application/x-www-form-urlencoded</li>
+</ul>
+<h2 id="response">response</h2>
+<ul>
+<li>一般情况下不需要显示设置；</li>
+<li>如果是文件导出，Content-Type 设置为 multipart/form-data，并且添加一个Content-Disposition设置为attachment;fileName=文件.后缀。<br>
+注：Content-Disposition是Content-Type的扩展，告诉浏览器弹窗下载框，而不是直接在浏览器里展示文件。因为一般浏览器对于它能够处理的文件类型，如txt，pdf 等，它都是直接打开展示，而不是弹窗下载框。</li>
+</ul>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://star2399.github.io/tag/p8CcyB2m9/" class="tag">
+                    计算机网络
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://star2399.github.io/post/http-zhuang-tai-ma/">
+                  <h3 class="post-title">
+                    HTTP状态码
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+
+
+
+
+  </body>
+</html>
